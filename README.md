@@ -6,7 +6,7 @@ Quartz Composer to JS/WebGL compiler
 Installation
 ============
 
-    sudo easy_install biplist yaml
+    sudo easy_install biplist pyyaml
 
 Running
 =======
