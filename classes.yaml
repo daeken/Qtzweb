@@ -1,0 +1,1254 @@
+AnchorPosition:
+  in:
+    - Y # Offset Y
+    - X # Offset X
+    - Height # Height
+    - Mode # Anchor Point
+        # Top Left
+        # Top Center
+        # Top Right
+        # -
+        # Center Left
+        # Center
+        # Center Right
+        # -
+        # Bottom Left
+        # Bottom Center
+        # Bottom Right
+    - Width # Width
+  out:
+    - Y # Y Position
+    - X # X Position
+
+AppleRemote:
+  out:
+    - Available # Remote Available
+    - DownSignal # Volume Down Signal
+    - NextSignal # Next Signal
+    - PlaySignal # Play Signal
+    - UpSignal # Volume Up Signal
+    - SelectSignal # Select Signal
+    - PreviousSignal # Previous Signal
+    - MenuSignal # Menu Signal
+
+Billboard:
+  in:
+    - Color # Color
+    - Image # Image
+    - Mask # Mask Image
+    - Y # Y Position
+    - PixelAligned # Pixel Aligned
+    - X # X Position
+    - Rotation # Rotation
+
+BonjourServices:
+  out:
+    - Services # Service List
+
+Camera:
+  in:
+    - OriginX # Origin X
+    - TranslateX # Translation X
+    - TranslateY # Translation Y
+    - TranslateZ # Translation Z
+    - OriginY # Origin Y
+    - ScaleX # Scale X
+    - ScaleY # Scale Y
+    - ScaleZ # Scale Z
+    - OriginZ # Origin Z
+    - RotateX # Rotation X
+    - RotateY # Rotation Y
+    - RotateZ # Rotation Z
+
+Clear:
+  in:
+    - Color # Clear Color
+
+Clock:
+  in:
+    - StartSignal # Start Signal
+    - StopSignal # Stop Signal
+    - ResetSignal # Reset Signal
+  out:
+    - Time # Time
+
+ColorFromComponents:
+  identifiers:
+    - rgb # RGB Color
+    - hsl # HSL Color
+  in:
+    - 1 # Red/Hue
+    - Alpha # Alpha
+    - 3 # Blue/Luminosity
+    - 2 # Green/Saturation
+  out:
+    - Color # Color
+
+ColorMask:
+  in:
+    - Blue # Blue Channel
+    - Alpha # Alpha Channel
+    - Green # Green Channel
+    - Red # Red Channel
+
+ColorMixer:
+  in:
+    - Color1 # First color
+    - Mix # Mixing Point
+    - Color2 # Second color
+    - Interpolation # Interpolation
+  out:
+    - Color # Color
+
+ColorToComponents:
+  identifiers:
+    - rgb # Color to RGB
+    - hsl # Color to HSL
+  in:
+    - Color # Color
+  out:
+    - 1 # Red/Hue
+    - Alpha # Alpha
+    - 3 # Blue/Luminosity
+    - 2 # Green/Saturation
+
+ColorTransform:
+  in:
+    - Color # Color
+    - Luminosity # Luminosity Factor
+    - Saturation # Saturation Factor
+    - Hue # Hue Rotation
+    - Alpha # Alpha Factor
+  out:
+    - Color # Color
+
+Conditional:
+  in:
+    - Test # Condition
+        # Is Equal
+        # Is Not Equal
+        # Is Greater Than
+        # Is Lower Than
+        # Is Greater Than or Equal To
+        # Is Lower Than or Equal To
+    - Tolerance # Tolerance
+    - Value2 # Second Value
+    - Value1 # First value
+  out:
+    - Result # Result
+
+Core3DLoader:
+  in:
+    - Path # Mesh Location
+
+Counter:
+  in:
+    - SignalDown # Decreasing Signal
+    - Signal # Increasing Signal
+    - SignalReset # Reset Signal
+  out:
+    - Count # Count
+
+Cube:
+  in:
+    - ImageLeft # Left Image
+    - ColorLeft # Left Color
+    - ColorRight # Right Color
+    - ImageBottom # Bottom Image
+    - RX # X Rotation
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Height # Height
+    - ColorFront # Front Color
+    - Width # Width
+    - Depth # Depth
+    - ColorBottom # Bottom Color
+    - ImageTop # Top Image
+    - ImageRight # Right Image
+    - X # X Position
+    - ImageBack # Back Image
+    - Y # Y Position
+    - ColorBack # Back Color
+    - ImageFront # Front Image
+    - Z # Z Position
+    - ColorTop # Top Color
+
+DateFormatter:
+  in:
+    - Time # Time
+  out:
+    - String # String
+
+Demultiplexer:
+  in:
+    - Index # Destination Index
+
+Detector:
+  in:
+    - BetterEyeLocs # BetterEyeLocs
+    - Image # Image
+    - Tracking # Track
+    - Accuracy # Accuracy
+  out:
+    - Features # Features
+
+DifferentialValue:
+  identifiers:
+    - integrator # Integrator
+    - derivator # Derivator
+  in:
+    - Value # Value
+    - ResetSignal # Reset Signal
+  out:
+    - Value # Integrated Value/Derived Value
+
+DirectoryScanner:
+  in:
+    - Path # Directory Location
+    - Signal # Scan Signal
+  out:
+    - Files # File List
+    - Signal # Done Signal
+
+Expression:
+  out:
+    - Result # Result
+
+FlameImage:
+  in:
+    - ColorEnd # End Color
+    - ColorMiddle # Middle Color
+    - ColorStart # Start Color
+  out:
+    - Image # Image
+
+Fog:
+  in:
+    - End # Linear End
+    - Density # Exponential Density
+    - Color # Color
+    - Type # Type
+        # Linear
+        # Exponential
+        # Exponential 2
+    - Start # Linear Start
+    - Mode # Distance Mode
+        # Plane Absolute
+        # Plane
+        # Radial
+    - Quality # Quality
+        # Per Vertex Computation
+        # Per Pixel Computation
+
+FPSDisplay:
+  in:
+    - Mode # FPS Mode
+        # Weighted Average
+        # Last Second Average
+        # Last Second Minimum
+
+Gradient:
+  in:
+    - Direction # Direction
+        # Vertical (Upside)
+        # Horizontal (Rightside)
+        # Vertical (Downside)
+        # Horizontal (Leftside)
+
+GLSLShader:
+  _
+
+Grid:
+  in:
+    - WidthResolution # Horizontal Resolution
+    - HeightResolution # Vertical Resolution
+    - RX # X Rotation
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Height # Height
+    - Width # Width
+    - Y # Y Position
+    - X # X Position
+    - Z # Z Position
+
+HIDInput:
+  out:
+    - Available # Device Available
+
+HostInfo:
+  out:
+    - UserName # User Name
+    - KernelVersion # Kernel Version
+    - ComputerName # Computer Name
+    - RAMSize # RAM Size
+    - MachineName # Machine Name
+    - HostName # Host Name
+    - LongUserName # Long User Name
+    - CPUType # CPU Type
+    - OSVersion # OS Version
+    - IPAddress # IP Address
+
+HotZone:
+  in:
+    - HitY # Test Y
+    - RX # X Rotation
+    - Mask # Mask Image
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Height # Height
+    - Width # Width
+    - HitX # Test X
+    - Y # Y Position
+    - X # X Position
+    - Z # Z Position
+  out:
+    - TopLeftX # Zone Top Left X
+    - TopLeftY # Zone Top Left Y
+    - MaskY # Hit Mask Y
+    - MaskX # Hit Mask X
+    - Hit # Hit Intensity
+    - BottomRightY # Zone Bottom Right Y
+    - BottomRightX # Zone Bottom Right X
+    - BottomLeftY # Zone Bottom Left Y
+    - BottomLeftX # Zone Bottom Left X
+    - ZoneY # Hit Zone Y
+    - ZoneX # Hit Zone X
+    - TopRightX # Zone Top Right X
+    - TopRightY # Zone Top Right Y
+
+ImageAccumulator:
+  in:
+    - Image # Replacing Image
+    - DirtyWidth # Replacing Rectangle (Width)
+    - Height # Pixels High
+    - Width # Pixels Wide
+    - DirtyHeight # Replacing Rectangle (Height)
+    - DirtyOriginX # Replacing Rectangle (Origin X)
+    - DirtyOriginY # Replacing Rectangle (Origin Y)
+    - Accumulate # Replace Content
+  out:
+    - Image # Image
+
+ImageColorMatchingProperties:
+  in:
+    - Image # Image
+    - ColorMatching # Color Matching
+        # Default
+        # -
+        # Enable
+        # Disable
+  out:
+    - Image # Image
+
+ImageCrop:
+  in:
+    - Rectangle_W # Crop Height
+    - Image # Image
+    - Rectangle_Y # Crop Y
+    - Rectangle_X # Crop X
+    - Rectangle_Z # Crop Width
+  out:
+    - Image # Cropped Image
+
+ImageDimensions:
+  in:
+    - Image # Image
+  out:
+    - PixelsWide # Pixels Wide
+    - PixelsHigh # Pixels High
+    - Width # Width
+    - Ratio # Aspect Ratio
+    - Height # Height
+
+ImageDownloader:
+  in:
+    - URL # Image Location
+  out:
+    - Progress # Download Progress
+    - Image # Image
+    - Signal # Done Signal
+
+ImageFilter:
+  out:
+    - Image # Image
+
+ImageHistogram:
+  in:
+    - Image # Image
+  out:
+    - RedHistogram # Red Histogram
+    - GreenHistogram # Green Histogram
+    - AlphaHistogram # Alpha Histogram
+    - BlueHistogram # Blue Histogram
+
+ImageInfo:
+  in:
+    - Image # Image
+  out:
+    - PixelsSizeH # Pixels Size H
+    - SourceRepresentation # Source Representation
+    - PixelsOriginX # Pixels Origin X
+    - PixelsOriginY # Pixels Origin Y
+    - DomainOfDefinition # Domain Of Definition
+    - ColorSpace # Color Space
+    - HasAlpha # Has Alpha
+    - PixelsSizeV # Pixels Size V
+    - ForwardMetadata # Forwarded Medatada
+    - Transformation # Transformation
+    - StaticMetadata # Static Medatada
+
+ImageLoader:
+  out:
+    - Image # Image
+
+ImageKernel:
+  out:
+    - Image # Image
+
+ImageOrigin:
+  in:
+    - Image # Image
+  out:
+    - PixelsOriginX # Pixels Origin X
+    - PixelsOriginY # Pixels Origin Y
+
+ImagePixel:
+  in:
+    - Image # Image
+    - ColorSpace # Color Space
+        # Image Native
+        # Absolute Linear
+        # Rendering Destination
+    - PixelX # Pixel X
+    - PixelY # Pixel Y
+  out:
+    - Blue # Blue Component
+    - Alpha # Alpha Component
+    - Green # Green Component
+    - Red # Red Component
+
+ImageResize:
+  in:
+    - Width # Resize Pixels Wide
+    - Image # Image
+    - Mode # Resize Mode
+        # Stretch
+        # Fit
+        # Fill
+    - Condition # Resize Condition
+        # Always
+        # Only If Image Is Smaller
+        # Only If Image Is Bigger
+    - Height # Resize Pixels High
+  out:
+    - Image # Resized Image
+
+ImageTexturingProperties:
+  in:
+    - Rotate # Matrix Rotation
+    - TranslateX # Matrix Translation X
+    - Target # Target
+        # Default
+        # -
+        # Rectangle
+        # 2D
+    - Mipmaps # Mipmapping
+        # Default
+        # -
+        # Disabled
+        # Enabled
+    - Image # Image
+    - ScaleX # Matrix Scaling X
+    - ScaleY # Matrix Scaling Y
+    - TranslateY # Matrix Translation Y
+  out:
+    - Image # Image
+
+ImageTransform:
+  in:
+    - Transform_ScaleY # Scaling Y
+    - Transform_ScaleX # Scaling X
+    - Image # Image
+    - Transform_OriginX # Origin X
+    - Transform_OriginY # Origin Y
+    - Transform_TranslateY # Translation Y
+    - Transform_TranslateX # Translation X
+    - Transform_Rotate # Rotation
+  out:
+    - Image # Transformed Image
+
+Info:
+  out:
+    - Version # Runtime Version
+    - SafeMode # Safe Mode
+
+Interpolation:
+  in:
+    - Duration # Duration
+    - Tension # Tension
+    - Repeat # Repeat Mode
+        # None
+        # Loop
+        # Mirrored Loop
+        # Mirrored Loop Once
+    - Value2 # End Value
+    - Value1 # Start Value
+  out:
+    - Value # Result
+
+Iterator:
+  in:
+    - Count # Iterations
+
+IteratorVariables:
+  out:
+    - Count # Iterations
+    - Position # Current Position
+    - Index # Current Index
+
+JavaScript:
+  foo:
+    - pass
+
+LFO:
+  in:
+    - PWMRatio # PWM Ratio
+    - Period # Period
+    - Amplitude # Amplitude
+    - Offset # Offset
+    - Phase # Phase
+    - Type # Type
+        # Sin
+        # Cos
+        # Triangle
+        # Square
+        # Sawtooth Up
+        # Sawtooth Down
+        # PWM
+        # Random
+  out:
+    - Value # Result
+
+Lighting:
+  in:
+    - ObjectShininess # Material Shininess
+    - AmbientColor # Ambient Light
+    - ObjectSpecular # Material Specularity
+
+Line:
+  in:
+    - StartZ # Start Position Z
+    - StartX # Start Position X
+    - StartColor # Start Color
+    - EndY # End Position Y
+    - EndX # End Position X
+    - EndZ # End Position Z
+    - EndColor # End Color
+    - StartY # Start Position Y
+    - LineWidth # Thickness
+
+Lines:
+  in:
+    - EndRX # End Orientation X
+    - EndRY # End Orientation Y
+    - EndRZ # End Orientation Z
+    - EndZ # End Position Z
+    - StartRY # Start Orientation Y
+    - StartRX # Start Orientation X
+    - StartRZ # Start Orientation Z
+    - EndLength # End Length
+    - StartColor # Start Color
+    - NumLines # Line Count
+    - EndY # End Position Y
+    - EndX # End Position X
+    - Phase # Line Phase
+    - AttractionZ # Attraction Point Z
+    - AttractionX # Attraction Point X
+    - AttractionY # Attraction Point Y
+    - AttractionAmount # Attraction Force
+    - StartLength # Start Length
+    - StartZ # Start Position Z
+    - StartX # Start Position X
+    - StartY # Start Position Y
+    - EndColor # End Color
+
+Log:
+  in:
+    - Value # Value
+
+Logic:
+  in:
+    - Operation # Operation
+        # AND
+        # OR
+        # XOR
+        # NOT
+        # NAND
+        # NOR
+        # NXOR
+    - Value2 # Second Operand
+    - Value1 # First Operand
+  out:
+    - Result # Result
+
+Math:
+  in:
+    - Value # Initial Value
+  out:
+    - Value # Resulting Value
+
+MeshCreator:
+  in:
+    - SliceHeight # Pixels Height
+    - SliceWidth # Pixels Width
+    - PointSize # Point Size
+    - Texcoords # Texture Coordinates
+    - CubeMap # Environment
+    - Vertices # Vertices
+    - Texture # Texture
+    - Volume # Volume
+    - Colors # Colors
+    - SliceDepth # Pixels Deep
+    - BackgroundTexture # Background
+    - Normals # Normals
+    - Indices # Indices
+    - LineWidth # Line Width
+  out:
+    - Mesh # Mesh
+
+MeshMaterialGetter:
+  in:
+    - Index # Texture Index
+    - Mesh # Mesh
+  out:
+    - Count # Texture Count
+    - Image # Image
+
+MeshMaterialSetter:
+  in:
+    - Index # Index
+    - Image # Image
+    - Mesh # Mesh
+  out:
+    - Mesh # Mesh
+
+MeshPropertyGetter:
+  in:
+    - Mesh # Mesh
+    - Property # Key
+    - Value # Structure
+  out:
+    - Value # Mesh Component
+
+MeshPropertySetter:
+  in:
+    - Mesh # Mesh
+    - Property # Key
+    - Value # Mesh Component
+  out:
+    - Mesh # Mesh
+
+MeshRenderer:
+  in:
+    - Color # Color
+    - RX # X Rotation
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Height # Scale Y
+    - Width # Scale X
+    - Depth # Scale Z
+    - Mesh # Mesh
+    - Y # Y Position
+    - X # X Position
+    - Z # Z Position
+
+MeshTransform:
+  in:
+    - Transform_ScaleY # Scaling Y
+    - Transform_ScaleX # Scaling X
+    - Transform_ScaleZ # Scaling Z
+    - Transform_TranslateZ # Translation Z
+    - Transform_OriginZ # Origin Z
+    - Transform_OriginY # Origin Y
+    - Transform_OriginX # Origin X
+    - Mesh # Mesh
+    - Transform_TranslateY # Translation Y
+    - Transform_TranslateX # Translation X
+    - Transform_RotateY # Rotation Y
+    - Transform_RotateX # Rotation X
+    - Transform_RotateZ # Rotation Z
+  out:
+    - Mesh # Transformed Mesh
+
+Mouse:
+  out:
+    - ScrollZ # Z Scroll
+    - ScrollX # X Scroll
+    - ScrollY # Y Scroll
+    - Button3 # Other Button
+    - Button2 # Right Button
+    - Button1 # Left Button
+    - Y # Y Position
+    - X # X Position
+
+MouseInteraction:
+  in:
+    - InitialRotateValue # Offset Rotation
+    - InitialYDrag # Offset Y
+    - InitialXDrag # Offset X
+    - InitialMagnifyValue # Offset Magnification
+  out:
+    - Interaction # Interaction
+    - Magnify # Magnify
+    - ClickCount # Click Count
+    - MagnifyValue # Magnification Value
+    - RotateValue # Rotation Angle
+    - Iteration # Iteration
+    - XDrag # X Position
+    - Rotate # Rotate
+    - MouseDown # Mouse Down
+    - SwipeY # Y Swipe
+    - YDrag # Y Position
+    - SwipeX # X Swipe
+    - MouseOver # Mouse Over
+
+Multiplexer:
+  in:
+    - Index # Source Index
+
+NetworkBroadcaster:
+  in:
+    - String # Broadcast String
+
+NetworkReceiver:
+  out:
+    - Timestamp # Received Timestamp
+    - Signal # Received Signal
+    - String # Received String
+
+NetworkSynchronizer:
+  in:
+    - String # Broadcast String
+  out:
+    - Timestamp # Received Timestamp
+    - Signal # Received Signal
+    - Broadcasting # Broadcasting
+    - String # Received String
+
+Noise:
+  out:
+    - Value # Result
+
+NumberFormatter:
+  in:
+    - Number # Number
+  out:
+    - String # String
+
+OpenCLConverter:
+  in:
+    - Stream # Structure
+    - Image # Image
+    - Height # Pixel High
+    - Width # Pixel Wide
+    - Depth # Pixels Deep
+    - Image3D # 3D Image
+  out:
+    - Image3D # 3D Image
+    - Image # Image
+    - Stream # Structure
+
+OpenCLInfo:
+  in:
+    - Devices # Devices
+  out:
+    - DeviceName # Name
+    - DeviceLocalMemSize # Local Mem Size
+    - DeviceImage2DMaxHeight # Image2D Max Height
+    - DeviceMaxConstantsArgs # Max Constant Args
+    - DeviceMaxReadImageArgs # Max Read Image Args
+    - DeviceVendor # Vendor
+    - DeviceMaxConstantBufferSize # Max Constant Buffer Size
+    - DeviceCount # Device Count
+    - DeviceMaxComputeUnits # Max Compute Units
+    - DeviceMaxWorkItemDimensions # Max Work Item Dimensions
+    - DeviceType # Device Type
+    - DeviceGlobalMemSize # Global Mem Size
+    - DeviceMaxWriteImageArgs # Max Write Image Args
+    - DeviceImage2DMaxWidth # Image2D Max Width
+    - DeviceMaxWorkGroupSize # Max Work Group Size
+    - DeviceMaxSamplers # Max Samplers
+    - DeviceVersion # Version
+
+OpenGLInfo:
+  out:
+    - Vendor # Renderer Vendor
+    - BitsPerPixel # Rendering Bits Per Pixel
+    - TextureUnits # Texture Units
+    - Version # Renderer Version
+    - CIAccelerated # Core Image Accelerated
+    - Renderer # Renderer Name
+    - MaxRenderSize # Max Render Size
+    - VRAM # Renderer VRAM
+    - MaxTextureSize # Max Texture Size
+    - FloatComponents # Float Components Rendering
+
+OSCReceiver:
+  out:
+    - Signal # Received Signal
+
+ParticleSystem:
+  in:
+    - PositionZ # Z Position
+    - Count # Particle Count
+    - PositionX # X Position
+    - PositionY # Y Position
+    - Attraction # Attraction
+    - Color # Color
+    - Image # Image
+    - Gravity # Gravity
+    - VelocityMaxY # Y Max Velocity
+    - VelocityMaxZ # Z Max Velocity
+    - VelocityMinY # Y Min Velocity
+    - VelocityMinX # X Min Velocity
+    - MaxSize # Max Size
+    - VelocityMinZ # Z Min Velocity
+    - MinSize # Min Size
+    - LifeTime # Lifetime
+    - VelocityMaxX # X Max Velocity
+
+PatchInfo:
+  in:
+    - Path # Composition Location
+  out:
+    - OutputList # Output Keys
+    - InputList # Input Keys
+    - Metadata # Attributes
+
+PatchRenderer:
+  in:
+    - Path # Composition Location
+
+Physics:
+  in:
+    - Force # Force
+    - Value # Value
+    - Friction # Friction
+    - Sampling # Sampling
+  out:
+    - Value # Simulated Value
+
+PhysicsEffect:
+  identifiers:
+    - force # Force
+  in:
+    - operandDescription # The operand value.
+    - operandName # Operand #%i
+    - Sampling # Sampling
+
+PlasmaImage:
+  in:
+    - Scale # Scale
+    - ColorMiddle # Middle Color
+    - Saturate # Saturate
+    - ColorEnd # End Color
+    - ColorStart # Start Color
+    - Amplitude # Amplitude
+    - Y # Y Offset
+    - X # X Offset
+  out:
+    - Image # Image
+
+Projection:
+  in:
+    - FieldOfView # Field Of View
+
+Psychedelic:
+  in:
+    - Color # Color
+    - Image # Image
+    - Scale # Scale
+    - Speed # Speed
+
+Pulse:
+  in:
+    - Signal # Input Signal
+    - Mode # Detection Mode
+        # Leading Edge
+        # Trailing Edge
+        # Both
+  out:
+    - Signal # Pulse
+
+Quadric:
+  identifiers:
+    - sphere # Sphere
+    - cylinder # Cylinder
+  in:
+    - Color # Color
+    - Image # Image
+    - RX # X Rotation
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Y # Y Position
+    - X # X Position
+    - Z # Z Position
+
+Queue:
+  in:
+    - Filling # Filling
+    - Value # Value
+    - ResetSignal # Reset Signal
+    - Size # Queue Size
+  out:
+    - Queue # Queue
+
+Random:
+  in:
+    - Max # Max
+    - Min # Min
+  out:
+    - Value # Value
+
+RangeValue:
+  in:
+    - Max # Range Max
+    - Value # Value
+    - Min # Range Min
+  out:
+    - Roll # Rolled-Over Value
+    - Clip # Clipped Value
+
+Recursor:
+  in:
+    - Initialize # Sample Value
+
+RenderInImage:
+  in:
+    - Width # Pixels Wide
+    - Mipmaps # Texture Mipmapping
+    - Target # Texture Target
+        # Rectangle
+        # 2D
+    - Render # Render
+    - Height # Pixels High
+  out:
+    - Image # Image
+
+Replicator:
+  in:
+    - Scale # Final Scale
+    - TranslationZ # Final Translation Z
+    - TranslationY # Final Translation Y
+    - TranslationX # Final Translation X
+    - RotationX # Final Rotation X
+    - OriginY # Origin Y
+    - OriginX # Origin X
+    - OriginZ # Origin Z
+    - RotationY # Final Rotation Y
+    - RotationZ # Final Rotation Z
+    - Copies # Copies
+    - OrientationZ # Final Orientation Z
+    - OrientationX # Final Orientation X
+    - OrientationY # Final Orientation Y
+
+RepositoryCompositions:
+  in:
+    - Attributes # Attributes
+    - Protocol # Protocol
+        # Any
+        # -
+        # Graphic Animation
+        # Graphic Transition
+        # Image Filter
+        # Screen Saver
+        # RSS Visualizer
+        # Music Visualizer
+        # Mesh Filter
+  out:
+    - Compositions # Composition Identifiers
+
+RoundValue:
+  in:
+    - Value # Value
+  out:
+    - Ceil # Ceil Value
+    - Round # Rounded Value
+    - Floor # Floor Value
+
+SampleHold:
+  in:
+    - SampleValue # Value
+    - ResetSignal # Reset Signal
+    - Sampling # Sampling
+  out:
+    - Value # Value
+
+ScreenInfo:
+  out:
+    - PixelsHigh # Pixels High
+    - Ratio # Aspect Ratio
+    - Height # Height
+    - PixelsWide # Pixels Wide
+    - Width # Width
+    - Resolution # Resolution
+
+Signal:
+  in:
+    - Mode # Mode
+        # After [x] Seconds
+        # Every [x] Seconds
+        # On Start, Then Every [x] Seconds
+        # When [x] Changes
+        # On Start, Then When [x] Changes
+    - Param # Parameter [x]
+  out:
+    - Signal # Signal
+
+Smooth:
+  in:
+    - DecreasingInterpolation # Decreasing Interpolation
+    - DecreasingDuration # Decreasing Duration
+    - Value # Value
+    - IncreasingInterpolation # Increasing Interpolation
+    - IncreasingDuration # Increasing Duration
+  out:
+    - Value # Smoothed Value
+
+Sphere:
+  in:
+    - Scale # Diameter
+    - ZBuffer # Unknown
+    - Blending # Blend mode
+    - Z # Z Position
+    - RY # Y Rotation
+    - X # X Position
+    - Y # Y Position
+    - Culling # Culling mode
+    - RX # X Rotation
+    - RZ # Z Rotation
+    - Color # Color
+
+Splitter:
+  in:
+    - input
+  out:
+    - output
+
+Spotlight:
+  in:
+    - Query # Query
+    - Signal # Search Signal
+  out:
+    - Files # File List
+    - Signal # Done Signal
+
+Sprite:
+  in:
+    - Interaction # Interaction
+    - Color # Color
+    - RX # X Rotation
+    - Image # Image
+    - Mask # Mask Image
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Height # Height
+    - Width # Width
+    - Y # Y Position
+    - X # X Position
+    - Z # Z Position
+
+StringCase:
+  in:
+    - Mode # Mode
+        # Capitalized
+        # Uppercase
+        # Lowercase
+    - String # String
+  out:
+    - String # String
+
+StringCompare:
+  in:
+    - String2 # Second String
+    - String1 # First String
+  out:
+    - Result # Result
+
+StringComponents:
+  in:
+    - Separator # Separator
+    - String # String
+  out:
+    - Components # Component List
+
+StringFormat:
+  identifiers:
+    - printer # String Printer
+    - scanner # String Scanner
+
+StringLength:
+  in:
+    - String # String
+  out:
+    - Length # Length
+
+StringMD5:
+  in:
+    - String # String
+  out:
+    - String # MD5
+
+StringRange:
+  in:
+    - Index # Index
+    - Length # Length
+    - String # String
+  out:
+    - String # String
+
+StringReplace:
+  in:
+    - CaseSensitive # Case Sensitive
+    - SearchString # Search String
+    - SourceString # String
+    - ReplaceString # Replace String
+  out:
+    - String # String
+
+StringTimecode:
+  in:
+    - Time # Time
+  out:
+    - String # String
+
+StringTruncate:
+  in:
+    - Max # Maximum Length
+    - Token # Token
+    - Direction # Direction
+        # From the Start
+        # From the Middle
+        # From the End
+    - Mode # Length Units
+        # Characters
+        # Words
+    - String # String
+  out:
+    - String # String
+
+StructureCount:
+  in:
+    - Structure # Structure
+  out:
+    - Count # Count
+
+StructureMember:
+  identifiers:
+    - keyAtIndex # Structure Key at Index
+    - index # Structure Index Member
+    - key # Structure Key Member
+  in:
+    - Structure # Structure
+  out:
+    - Member # Member
+
+StructureRange:
+  in:
+    - Index # Index
+    - Length # Length
+    - Structure # Structure
+  out:
+    - Structure # Structure
+
+StructureReverse:
+  in:
+    - Structure # Structure
+  out:
+    - Structure # Reversed Structure
+
+StructureSort:
+  in:
+    - SortingKey # Sorting Descriptor
+    - Structure # Structure
+  out:
+    - Structure # Sorted Structure
+
+SystemTime:
+  out:
+    - Time # Time
+
+Tablet:
+  out:
+    - UpperButton # Upper Button
+    - TipButton # Tip Button
+    - LowerButton # Lower Button
+    - Pressure # Pressure
+    - Y # Y
+    - X # X
+    - TiltX # Tilt X
+    - TiltY # Tilt Y
+
+Teapot:
+  in:
+    - Scale # Scale
+    - Color # Color
+    - Image # Image
+    - RX # X Rotation
+    - RY # Y Rotation
+    - RZ # Z Rotation
+    - Y # Y Position
+    - X # X Position
+    - Z # Z Position
+
+TextImage:
+  in:
+    - FontName # Font Name
+    - String # String
+    - Leading # Font Leading Offset
+    - GlyphSize # Font Size
+    - Height # Image Height
+    - Width # Image Width
+    - Kerning # Font Kerning Shift
+  out:
+    - Width # Display Width
+    - Image # Image
+    - LineCount # Line Count
+    - GlyphCount # Character Count
+    - Height # Display Height
+
+Time:
+  out:
+    - Time # Time
+
+TimeLine:
+  out:
+    - Value # Result
+
+TimeLoop:
+  in:
+    - Count # Copies
+    - Start # Start Time
+    - End # End Time
+
+TrackBall:
+  in:
+    - Track # Track Mouse
+    - OriginY # Rotation Origin Y
+    - OriginX # Rotation Origin X
+    - ResetSignal # Reset Signal
+    - OriginZ # Rotation Origin Z
+
+Watcher:
+  out:
+    - Signal # Updating Signal
+
+XMLDownloader:
+  in:
+    - URL # XML Location
+    - Signal # Update Signal
+  out:
+    - Progress # Download Progress
+    - Signal # Done Signal
+    - Structure # Parsed XML
+
