@@ -25,10 +25,10 @@
       if (x===undefined || y === undefined) {
         x = window.scrollX - 100 + Math.floor($(window).width()/2);
         y = window.scrollY - 100 + Math.floor($(window).height()/2);
-
-        while(overlap(x, y))
-          x += 50, y += 50;
       }
+      
+      while(overlap(x, y))
+        x += 50, y += 50;
 
       // Add node
       var newNode = new node.Model({
