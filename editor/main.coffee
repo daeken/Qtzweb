@@ -1,3 +1,3 @@
 $ ($) ->
-	g = Dataflow.loadGraph({"nodes": [], "edges": []})
+	g = Dataflow.loadGraph()
 	g.trigger("change")

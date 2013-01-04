@@ -2,6 +2,7 @@ require 'pp'
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'json'
 require 'yaml'
 
 def patchsrc
