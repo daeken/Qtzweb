@@ -1,0 +1,3 @@
+[submodule "editor/dataflow"]
+	path = editor/dataflow
+	url = https://github.com/meemoo/dataflow.git
