@@ -4,6 +4,14 @@
 
   var exclude = ["base", "base-resizable"];
 
+  var overlap = function(x, y) {
+    function sep(a, b, e) { return Math.abs(a - b) < e; }
+
+    return Dataflow.currentGraph.nodes.some(function(node) {
+      return sep(x, node.attributes.x, 25) && sep(y, node.attributes.y, 25);
+    });
+  }
+
   var addNode = function(node, x, y) {
     return function(){
       // Deselect others
@@ -14,12 +22,14 @@
         id++;
       }
       // Position
-      if (x===undefined) {
+      if (x===undefined || y === undefined) {
         x = window.scrollX - 100 + Math.floor($(window).width()/2);
-      }
-      if (y===undefined) {
         y = window.scrollY - 100 + Math.floor($(window).height()/2);
+
+        while(overlap(x, y))
+          x += 50, y += 50;
       }
+
       // Add node
       var newNode = new node.Model({
         id: id,
