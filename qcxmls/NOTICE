@@ -1,0 +1,3 @@
+DO NOT PUSH XML FILES TO THE REPO
+
+These are Apple's IP and cannot be published.  They can be found in /System/Library/Frameworks/Quartz.framework/Versions/A/Frameworks/QuartzComposer.framework/Versions/A/Resources on OS X Mountain Lion (10.8).

@@ -12,7 +12,7 @@ def fix(name):
 
 fp = file('classes.yaml', 'w')
 
-for fn in glob('xmls/QC*.xml'):
+for fn in glob('qcxmls/QC*.xml'):
 	cls = fn[7:-4]
 	node = readPlist(fn)
 	if cls in 'Patch GLSLShader ImageLoader Keyboard OpenCL OSCBroadcaster Splitter'.split(' '):
