@@ -76,4 +76,7 @@ for fn in glob('qcxmls/QC*.xml'):
 		for name, names in outp.items():
 			print >>fp, '    - %s # %s' % (name, '/'.join(names))
 
+	if not len(inp) and not len(outp):
+		print >>fp, '  -'
+
 	print >>fp

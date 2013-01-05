@@ -248,6 +248,7 @@ FPSDisplay:
         # Last Second Minimum
 
 GLSLShader:
+  -
 
 Gradient:
   in:
@@ -401,6 +402,7 @@ ImageKernel:
     - Image # Image
 
 ImageLoader:
+  -
 
 ImageOrigin:
   in:
@@ -504,6 +506,7 @@ IteratorVariables:
     - Index # Current Index
 
 Keyboard:
+  -
 
 LFO:
   in:
@@ -741,6 +744,7 @@ NumberFormatter:
     - String # String
 
 OpenCL:
+  -
 
 OpenCLConverter:
   in:
@@ -791,6 +795,7 @@ OpenGLInfo:
     - FloatComponents # Float Components Rendering
 
 OSCBroadcaster:
+  -
 
 OSCReceiver:
   out:
@@ -817,6 +822,7 @@ ParticleSystem:
     - VelocityMaxX # X Max Velocity
 
 Patch:
+  -
 
 PatchInfo:
   in:
@@ -1017,6 +1023,7 @@ Smooth:
     - Value # Smoothed Value
 
 Splitter:
+  -
 
 Spotlight:
   in:
@@ -1069,6 +1076,7 @@ StringFormat:
   identifiers:
     - printer # String Printer
     - scanner # String Scanner
+  -
 
 StringLength:
   in:
