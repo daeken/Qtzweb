@@ -1,6 +1,7 @@
 from pprint import pprint
 from glob import glob
 from biplist import readPlist
+import yaml
 
 def fix(name):
 	name = name.lstrip('_')
@@ -13,10 +14,12 @@ def fix(name):
 fp = file('classes.yaml', 'w')
 
 for fn in glob('qcxmls/QC*.xml'):
-	cls = fn[7:-4]
+	cls = fn[9:-4]
 	node = readPlist(fn)
-	if cls in 'Patch GLSLShader ImageLoader Keyboard OpenCL OSCBroadcaster Splitter'.split(' '):
-		continue
+	#if cls in 'Patch ImageLoader Keyboard OpenCL OSCBroadcaster Splitter'.split(' '):
+	#	continue
+	yaml.dump(node, file('qcxmls/QC%s.yaml' % cls, 'w'))
+
 	print >>fp, '%s:' % cls
 	#pprint(node)
 
