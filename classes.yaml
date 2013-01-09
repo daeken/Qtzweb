@@ -247,9 +247,6 @@ FPSDisplay:
         # Last Second Average
         # Last Second Minimum
 
-GLSLShader:
-  -
-
 Gradient:
   in:
     - Direction # Direction
@@ -257,6 +254,9 @@ Gradient:
         # Horizontal (Rightside)
         # Vertical (Downside)
         # Horizontal (Leftside)
+
+GLSLShader:
+  _
 
 Grid:
   in:
@@ -397,12 +397,13 @@ ImageInfo:
     - Transformation # Transformation
     - StaticMetadata # Static Medatada
 
-ImageKernel:
+ImageLoader:
   out:
     - Image # Image
 
-ImageLoader:
-  -
+ImageKernel:
+  out:
+    - Image # Image
 
 ImageOrigin:
   in:
@@ -505,8 +506,9 @@ IteratorVariables:
     - Position # Current Position
     - Index # Current Index
 
-Keyboard:
-  -
+JavaScript:
+  foo:
+    - pass
 
 LFO:
   in:
@@ -743,9 +745,6 @@ NumberFormatter:
   out:
     - String # String
 
-OpenCL:
-  -
-
 OpenCLConverter:
   in:
     - Stream # Structure
@@ -794,9 +793,6 @@ OpenGLInfo:
     - MaxTextureSize # Max Texture Size
     - FloatComponents # Float Components Rendering
 
-OSCBroadcaster:
-  -
-
 OSCReceiver:
   out:
     - Signal # Received Signal
@@ -820,9 +816,6 @@ ParticleSystem:
     - MinSize # Min Size
     - LifeTime # Lifetime
     - VelocityMaxX # X Max Velocity
-
-Patch:
-  -
 
 PatchInfo:
   in:
@@ -1022,8 +1015,25 @@ Smooth:
   out:
     - Value # Smoothed Value
 
+Sphere:
+  in:
+    - Scale # Diameter
+    - ZBuffer # Unknown
+    - Blending # Blend mode
+    - Z # Z Position
+    - RY # Y Rotation
+    - X # X Position
+    - Y # Y Position
+    - Culling # Culling mode
+    - RX # X Rotation
+    - RZ # Z Rotation
+    - Color # Color
+
 Splitter:
-  -
+  in:
+    - input
+  out:
+    - output
 
 Spotlight:
   in:
@@ -1076,7 +1086,6 @@ StringFormat:
   identifiers:
     - printer # String Printer
     - scanner # String Scanner
-  -
 
 StringLength:
   in:
@@ -1242,4 +1251,3 @@ XMLDownloader:
     - Progress # Download Progress
     - Signal # Done Signal
     - Structure # Parsed XML
-
