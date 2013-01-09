@@ -1,3 +1,5 @@
+// PARTIAL
+
 function QCSprite(params) {
   this.params = params;
   this.outs = {};

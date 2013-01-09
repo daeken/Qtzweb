@@ -1,3 +1,5 @@
+// PARTIAL
+
 function QCTextImage(params) {
   this.params = params;
   this.outs = {};
