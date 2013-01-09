@@ -17,19 +17,18 @@ for cls in classes.keys():
 
 header = ''
 body = ''
-def dump(elems, title, color):
+def dump(elems, title):
 	global header, body
-	header += '<font color=%s>%s</font>: <b>%i/%i</b><br>' % (color, title, len(elems), len(classes))
-	body += '<br><h1>%s:</h1>' % (title)
-	body += '<ul>'
+	header += '%s: **%i/%i**  \n' % (title, len(elems), len(classes))
+	body += '\n'
+	body += '#%s:\n\n' % (title)
 	for elem in sorted(elems):
-		body += '<li><font color="%s">%s</font></li>' % (color, elem)
-	body += '</ul>'
+		body += '- %s\n' % elem
 
-dump(completed, 'Completed', 'green')
-dump(partial, 'Partial', 'blue')
-dump(nil, 'Not implemented', 'red')
+dump(completed, 'Completed')
+dump(partial, 'Partial')
+dump(nil, 'Not implemented')
 
-fp = file('Compatibility.html', 'w')
+fp = file('Compatibility.md', 'w')
 fp.write(header+body)
 fp.close()
