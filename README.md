@@ -23,3 +23,8 @@ After that, you can pass any value to enable debugging.
     python convert.py demos/IWTC.qtz none debug > IWTC_debug.html
 
 When passing an audio file (e.g. not `none`), it will automatically assume that you have both an mp3 and ogg version of the track. (XXX: Fixme)
+
+Help/Discussion
+===============
+
+The official channel is #qtzweb on irc.freenode.net.  Feel free to drop by for help or development discussion!
