@@ -1,5 +1,5 @@
-Completed: **21/128**  
-Partial: **2/128**  
+Completed: **20/128**  
+Partial: **3/128**  
 Not implemented: **105/128**  
 
 #Completed:
@@ -16,7 +16,6 @@ Not implemented: **105/128**
 - Interpolation
 - Iterator
 - JavaScript
-- LFO
 - Lighting
 - Logic
 - Math
@@ -28,6 +27,7 @@ Not implemented: **105/128**
 
 #Partial:
 
+- LFO
 - Sprite
 - TextImage
 

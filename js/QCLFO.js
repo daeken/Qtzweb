@@ -1,3 +1,5 @@
+// PARTIAL
+
 function QCLFO(params) {
   this.params = params;
   this.outs = {};

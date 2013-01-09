@@ -11,6 +11,7 @@ import httplib, urllib
 
 basedeps = ['matrix', 'base']
 jsdeps = basedeps[:]
+builtins = ['QCIteratorVariables']
 
 packing = False
 
@@ -381,6 +382,8 @@ def main(fn, audio='none', debug=False):
   code = root.code()
   deps = ''
   for depcls in jsdeps:
+    if depcls in builtins:
+      continue
     try:
       dep = file('js/' + depcls + '.js').read()
       if debug and depcls not in basedeps:
