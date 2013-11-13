@@ -24,11 +24,12 @@ Not implemented: **105/128**
 - Sphere
 - Splitter
 - Time
+- GLSLShader
+- ImageLoader
 
 #Partial:
 
 - LFO
-- Sprite
 - TextImage
 
 #Not implemented:
@@ -49,7 +50,6 @@ Not implemented: **105/128**
 - FPSDisplay
 - FlameImage
 - Fog
-- GLSLShader
 - Gradient
 - Grid
 - HIDInput
@@ -64,7 +64,6 @@ Not implemented: **105/128**
 - ImageHistogram
 - ImageInfo
 - ImageKernel
-- ImageLoader
 - ImageOrigin
 - ImagePixel
 - ImageResize
@@ -115,6 +114,7 @@ Not implemented: **105/128**
 - Signal
 - Smooth
 - Spotlight
+- Sprite
 - StringCase
 - StringCompare
 - StringComponents

@@ -1,6 +1,7 @@
 import re, sys
 from biplist import readPlist
 from pprint import pprint
+import base64, os
 import yaml
 import json
 try:
@@ -70,7 +71,7 @@ def shadermin(shader):
 
   gsub(r'//.*$', '')
   gsub(r'\s+', ' ', True)
-  gsub(r'/*.*?\*/', '')
+  gsub(r'/\*.*?\*/', '')
   gsub(r'\.0+([^0-9])', r'.\1')
   gsub(r'0+([1-9]+\.[^a-z_])', r'\1')
   gsub(r'0+([1-9]*\.[0-9])', r'\1')
@@ -258,6 +259,7 @@ class QCPatch(Node):
         slices='Slices', 
         stacks='Stacks', 
         operationCount='OperationCount', 
+        fillBackground='FillBackground', 
       )
 
       if 'customInputPortStates' in estate:
@@ -277,6 +279,10 @@ class QCPatch(Node):
         node.sub = QCPatch(elem)
       if 'script' in estate:
         node.func = rewriteJS(estate['script'])
+      if 'imagePath' in estate:
+        ext = estate['imagePath'].rsplit('.', 1)[1]
+        data = file(os.path.expanduser(estate['imagePath']), 'rb').read()
+        node.inport('ImageData', 'data:image/%s;base64,%s' % (ext, base64.encodestring(data).replace('\n', '')))
 
       self.nodes[node.name] = node
       deps[node.name] = []
@@ -322,7 +328,32 @@ class QCPatch(Node):
       if node.cls == 'QCPatch':
         code += '%s.nodes.%s = %s' % (self.name, node.name, node.code())
       else:
-        code += '%s.nodes.%s = new %s(%s%s%s);\n' % (self.name, name, node.cls, (node.func + ', ') if node.func else '', (node.sub.name + ', ') if node.sub else '', json.dumps(args))
+        if node.cls == 'QCGLSLShader':
+          ports = []
+          types = []
+
+          for key in node.inports.keys():
+            if key[0] != '_' and key not in ('VertexShader','FragmentShader'):
+              if key.endswith('_X') or key.endswith('_Y') or key.endswith('_Z') or key.endswith('_W'):
+                key = key[:-2]
+                if key in ports:
+                  continue
+                if key + '_W' in node.inports:
+                  type = 'vec4'
+                elif key + '_Z' in node.inports:
+                  type = 'vec3'
+                else:
+                  type = 'vec2'
+                ports.append(key)
+                types.append(type)
+              else:
+                ports.append(key)
+                types.append('scalar')
+
+          sargs = ', [%s], [%s]' % (', '.join(map(repr, ports)), ', '.join(map(repr, types)))
+        else:
+          sargs = ''
+        code += '%s.nodes.%s = new %s(%s%s%s%s);\n' % (self.name, name, node.cls, (node.func + ', ') if node.func else '', (node.sub.name + ', ') if node.sub else '', json.dumps(args), sargs)
     code += '%s.update(function() {\n' % self.name
     for name in self.order:
       node = self.nodes[name]
@@ -356,10 +387,10 @@ def main(fn, audio='none', debug=False):
     pass
   pruneUserInfo(data)
 
-  #print '<pre>'
-  #dump(data)
-  #print '</pre>'
-  #print '<h1>QtzWeb</h1>'
+  if debug == 'verbose':
+    print '<pre>'
+    dump(data)
+    print '</pre>'
 
   if not debug:
     packing = True

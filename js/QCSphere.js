@@ -2,13 +2,15 @@ function QCSphere(params) {
   this.params = params;
 
   if(QCSphere.vertBuffer === undefined) {
-    var stacks = 12, slices = 24; // This is in theory defined by the spheres in the file, but... good luck.
+    var stacks = 24, slices = 24; // This is in theory defined by the spheres in the file, but... good luck.
 
     var verts = new Float32Array(stacks * slices * 3), vi = 0;
     var indices = new Uint16Array(stacks * slices * 6), ii = 0;
     var texcoords = new Float32Array(stacks * slices * 2), ti = 0;
     QCSphere.colors = new Float32Array(stacks * slices * 4);
-    QCSphere.curColor = [1, 1, 1, 1];
+    for(var i = 0; i < stacks.slices * 4; ++i)
+      QCSphere.colors[i] = -1.0;
+    QCSphere.curColor = [-1, -1, -1, -1];
 
     stacks -= 1;
     slices -= 1;
@@ -25,7 +27,7 @@ function QCSphere(params) {
 
         var x = cosp * sint, y = cost, z = sinp * sint;
         var u = 1 - (slice / slices), v = 1 - (stack / stacks);
-
+        
         texcoords[ti++] = u;
         texcoords[ti++] = v;
 
@@ -76,11 +78,16 @@ function QCSphere(params) {
   }
 
   this.update = function() {
+    if(this.params._enable === false)
+      return;
+    
     with(this.params) {
       // Yep, our vertex and normal buffers are the same.
       gl.bindBuffer(gl.ARRAY_BUFFER, QCSphere.vertBuffer);
       gl.vertexAttribPointer(gl.program.aVertexPosition, QCSphere.vertBuffer.itemSize, gl.FLOAT, false, 0, 0);
       gl.vertexAttribPointer(gl.program.aVertexNormal, QCSphere.vertBuffer.itemSize, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, QCSphere.texcoordBuffer);
+      gl.vertexAttribPointer(gl.program.aTexCoord, QCSphere.texcoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
       gl.bindBuffer(gl.ARRAY_BUFFER, QCSphere.colorBuffer);
       var c = color(Color), colors = QCSphere.colors, cur = QCSphere.curColor;
@@ -96,9 +103,12 @@ function QCSphere(params) {
 
         gl.bufferData(gl.ARRAY_BUFFER, colors, gl.DYNAMIC_DRAW);
       }
+      gl.bindBuffer(gl.ARRAY_BUFFER, QCSphere.colorBuffer);
       gl.vertexAttribPointer(gl.program.aVertexColor, QCSphere.colorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
       gl.push();
+      if(params.Image != null)
+        gl.useTexture(Image);
 
       if(X != 0 || Y != 0 || Z != 0)
         mat4.translate(gl.mvMatrix, [X, Y, Z]);
@@ -117,6 +127,8 @@ function QCSphere(params) {
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, QCSphere.indexBuffer);
       gl.drawElements(gl.TRIANGLES, QCSphere.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
+      if(params.Image != null)
+        gl.popTexture();
       gl.pop();
     }
   }

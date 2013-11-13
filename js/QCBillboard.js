@@ -20,14 +20,23 @@ function QCBillboard(params) {
     QCBillboard.normalBuffer.itemSize = 3;
     QCBillboard.normalBuffer.numItems = 4;
 
+    QCBillboard.texcoordBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, QCBillboard.texcoordBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(QCBillboard.texcoords), gl.STATIC_DRAW);
+    QCBillboard.texcoordBuffer.itemSize = 2;
+    QCBillboard.texcoordBuffer.numItems = 4;
+
     QCBillboard.colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, QCBillboard.colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(4*4), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]), gl.STATIC_DRAW);
     QCBillboard.colorBuffer.itemSize = 4;
     QCBillboard.colorBuffer.numItems = 4;
   }
 
   this.update = function() {
+    if(this.params._enable === false)
+      return;
+    
     with(this.params) {
       gl.bindBuffer(gl.ARRAY_BUFFER, QCBillboard.vertBuffer);
       gl.vertexAttribPointer(gl.program.aVertexPosition, QCBillboard.vertBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -35,27 +44,27 @@ function QCBillboard(params) {
       gl.vertexAttribPointer(gl.program.aVertexNormal, QCBillboard.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
       gl.bindBuffer(gl.ARRAY_BUFFER, QCBillboard.colorBuffer);
       gl.vertexAttribPointer(gl.program.aVertexColor, QCBillboard.colorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, QCBillboard.texcoordBuffer);
+      gl.vertexAttribPointer(gl.program.aTexCoord, QCBillboard.texcoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, QCBillboard.indexBuffer);
 
       gl.push();
+      gl.useTexture(Image);
 
-      if(X != 0 || Y != 0 || Z != 0)
-        mat4.translate(gl.mvMatrix, [X, Y, Z]);
+      if(X != 0 || Y != 0)
+        mat4.translate(gl.mvMatrix, [X, Y, 0.0]);
 
-      if(RX)
-        mat4.rotate(gl.mvMatrix, degrad(RX), [1, 0, 0]);
-      if(RY)
-        mat4.rotate(gl.mvMatrix, degrad(RY), [0, 1, 0]);
-      if(RZ)
-        mat4.rotate(gl.mvMatrix, degrad(RZ), [0, 0, 1]);
+      if(Rotation)
+        mat4.rotate(gl.mvMatrix, degrad(Rotation), [0, 0, 1]);
 
-      if(Width != 1 || Height != 1 || Depth != 1)
-        mat4.scale(gl.mvMatrix, [Width, Height, Depth]);
+      if(Scale != 1)
+        mat4.scale(gl.mvMatrix, [Scale, Scale, Scale]);
 
       gl.matUpdate();
       gl.drawElements(gl.TRIANGLES, QCBillboard.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
+      gl.popTexture();
       gl.pop();
     }
   }
@@ -74,4 +83,10 @@ QCBillboard.normals = [
    0.0,  0.0,  1.0,
    0.0,  0.0,  1.0,
    0.0,  0.0,  1.0,
+];
+QCBillboard.texcoords = [
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0
 ];

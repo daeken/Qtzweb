@@ -32,9 +32,18 @@ function degrad(angle) {
 
 function color(x, components) {
   if(components == 3)
-    return [x.red || x[0] || x, x.green || x[1] || x, x.blue || x[2] || x];
+    return [
+      (x.red !== undefined) ? x.red : (x[0] || x), 
+      (x.green !== undefined) ? x.green : (x[1] || x), 
+      (x.blue !== undefined) ? x.blue : (x[2] || x)
+    ];
   else
-    return [x.red || x[0] || x, x.green || x[1] || x, x.blue || x[2] || x, x.alpha || x[3] || 1.0];
+    return [
+      (x.red !== undefined) ? x.red : (x[0] || x), 
+      (x.green !== undefined) ? x.green : (x[1] || x), 
+      (x.blue !== undefined) ? x.blue : (x[2] || x), 
+      (x.alpha !== undefined) ? x.alpha : (x[3] || x)
+    ];
 }
 
 function interp(a, b, mix, type) {
@@ -48,33 +57,44 @@ function interp(a, b, mix, type) {
   }
 }
 
-var default_vs = <shader>
+var vs_preamble = <shader>
   attribute vec3 aVertexPosition;
   attribute vec3 aVertexNormal;
   attribute vec4 aVertexColor;
+  attribute vec2 aTexCoord;
   uniform mat4 uMVMatrix;
   uniform mat4 uPMatrix;
   uniform mat4 uNMatrix;
   varying vec4 vColor;
   varying vec4 vPosition;
   varying vec3 vNormal;
+  varying vec2 vTexCoord;
+</shader>;
+
+var default_vs = vs_preamble + <shader>
   void main(void) {
     vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);
     gl_Position = uPMatrix * vPosition;
     vNormal = (uNMatrix * vec4(aVertexNormal, 1.0)).xyz;
     vColor = aVertexColor;
+    vTexCoord = aTexCoord;
   }
 </shader>;
 
-var default_fs = <shader>
+var fs_preamble = <shader>
   precision mediump float;
   varying vec4 vColor;
   varying vec4 vPosition;
   varying vec3 vNormal;
-  uniform bool useLighting;
+  varying vec2 vTexCoord;
+</shader>;
+
+var default_fs = fs_preamble + <shader>
+  uniform bool useLighting, useTexture;
   uniform vec3 ambientColor;
   uniform float specular, shininess;
   uniform vec3 lightPosition, lightColor;
+  uniform sampler2D sampler;
   void main(void) {
     vec3 weight;
     if (!useLighting)
@@ -91,12 +111,32 @@ var default_fs = <shader>
       }
       gl_FragColor = vec4(vColor.rgb * light + spec, vColor.a);
     }
+    gl_FragColor.g = 1.0;
+
+    if(useTexture) {
+      gl_FragColor *= texture2D(sampler, vTexCoord);
+      gl_FragColor.a = 1.0;
+    }
   }
 </shader>;
 
 function compile(vs, fs, attribs, uniforms) {
   function sub(src, type) {
     var shdr = gl.createShader(type);
+
+    src = src.replace(/gl_ModelViewMatrix/g, 'uMVMatrix');
+    src = src.replace(/gl_ModelViewMatrixInverseTranspose/g, 'uNMatrix');
+    src = src.replace(/gl_ModelViewProjectionMatrix/g, '(uPMatrix * uMVMatrix)');
+    src = src.replace(/gl_ProjectionMatrix/g, 'uPMatrix');
+    src = src.replace(/gl_Vertex/g, 'vec4(aVertexPosition, 1.0)');
+    src = src.replace(/gl_TexCoord\[0\]/g, 'vTexCoord');
+    src = src.replace(/gl_TextureMatrix\[0\]/g, '1.0');
+    src = src.replace(/gl_MultiTexCoord0/g, 'aTexCoord');
+    src = src.replace(/gl_FrontColor/g, 'vColor');
+    src = src.replace(/gl_Color/g, 'aVertexColor');
+
+    //console.log(src);
+
     gl.shaderSource(shdr, src);
     gl.compileShader(shdr);
 
@@ -114,10 +154,14 @@ function compile(vs, fs, attribs, uniforms) {
   gl.linkProgram(prog);
   gl.useProgram(prog);
 
-  for(var i in attribs)
-    gl.enableVertexAttribArray(prog[attribs[i]] = gl.getAttribLocation(prog, attribs[i]));
+  for(var i in attribs) {
+    prog[attribs[i]] = gl.getAttribLocation(prog, attribs[i]);
+    gl.enableVertexAttribArray(prog[attribs[i]]);
+  }
   for(var i in uniforms)
     prog[uniforms[i]] = gl.getUniformLocation(prog, uniforms[i]);
+
+  prog.hasNormal = true;
 
   return prog;
 }
@@ -134,19 +178,22 @@ function init() {
 
   gl.enable(gl.DEPTH_TEST);
 
-  gl.program = compile(
+  gl.programStack = [];
+  gl.program = gl.default_program = compile(
     default_vs, 
     default_fs, 
     [
       'aVertexPosition', 
       'aVertexColor', 
-      'aVertexNormal'
+      'aVertexNormal',
+      'aTexCoord'
     ], 
     [
       'uPMatrix', 
       'uMVMatrix', 
       'uNMatrix',  
       'useLighting', 
+      'useTexture', 
       'ambientColor', 
       'specular', 
       'shininess', 
@@ -175,11 +222,38 @@ function init() {
     mat4.transpose(nMatrix);
     gl.uniformMatrix4fv(gl.program.uNMatrix, false, nMatrix);
   };
+  gl.pushProgram = function(prog) {
+    gl.programStack.push(gl.program);
+    gl.program = prog;
+    gl.useProgram(prog);
+    gl.matUpdate();
+  };
+  gl.popProgram = function() {
+    gl.program = gl.programStack.pop();
+    gl.useProgram(gl.program);
+    gl.matUpdate();
+  };
+  gl.texture = null;
+  gl.textureStack = [];
+  gl.useTexture = function(tex) {
+    if(gl.program == gl.default_program && gl.texture == null)
+      gl.uniform1i(gl.program.useTexture, true);
+    gl.textureStack.push(gl.texture);
+    gl.texture = tex;
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+  };
+  gl.popTexture = function() {
+    gl.texture = gl.textureStack.pop();    if(gl.program == gl.default_program && gl.texture == null)
+      gl.uniform1i(gl.program.useTexture, false);
+    else
+      gl.bindTexture(gl.TEXTURE_2D, gl.texture);
+  };
 
   gl.width = elem.width;
   gl.height = elem.height;
 
   gl.uniform1i(gl.program.useLighting, false);
+  gl.uniform1i(gl.program.useTexture, false);
 
   gl.cullFace(gl.BACK);
 }

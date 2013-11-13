@@ -20,22 +20,37 @@ function QCCube(params) {
     QCCube.normalBuffer.itemSize = 3;
     QCCube.normalBuffer.numItems = 24;
 
+    QCCube.texcoordBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.texcoordBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(QCCube.texcoords), gl.STATIC_DRAW);
+    QCCube.texcoordBuffer.itemSize = 2;
+    QCCube.texcoordBuffer.numItems = 24;
+
+    QCCube.colors = new Float32Array(24*4);
+    for(var i = 0; i < 24*4; ++i)
+      QCCube.colors[i] = -1.0;
     QCCube.colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.colorBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, QCCube.colors = new Float32Array(24*4), gl.DYNAMIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, QCCube.colors, gl.DYNAMIC_DRAW);
     QCCube.colorBuffer.itemSize = 4;
     QCCube.colorBuffer.numItems = 24;
-    QCCube.curColor = [[],[],[],[],[],[]];
+    QCCube.curColor = [];
+    for(var i = 0; i < 6; ++i)
+      QCCube.curColor[i] = [-1.0, -1.0, -1.0, -1.0];
   }
 
   this.update = function() {
+    if(this.params._enable === false)
+      return;
+
     with(this.params) {
       gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.vertBuffer);
       gl.vertexAttribPointer(gl.program.aVertexPosition, QCCube.vertBuffer.itemSize, gl.FLOAT, false, 0, 0);
       gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.normalBuffer);
       gl.vertexAttribPointer(gl.program.aVertexNormal, QCCube.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+      gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.texcoordBuffer);
+      gl.vertexAttribPointer(gl.program.aTexCoord, QCCube.texcoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
-      gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.colorBuffer);
       var colors = [
         ColorFront, 
         ColorBack, 
@@ -47,10 +62,10 @@ function QCCube(params) {
       var updated = false;
       for(var i in colors) {
         var c = color(colors[i]);
-        if(c[0] != QCCube.curColor[i][0] || 
-           c[1] != QCCube.curColor[i][1] || 
-           c[2] != QCCube.curColor[i][2] || 
-           c[3] != QCCube.curColor[i][3]
+        if(c[0] !== QCCube.curColor[i][0] || 
+           c[1] !== QCCube.curColor[i][1] || 
+           c[2] !== QCCube.curColor[i][2] || 
+           c[3] !== QCCube.curColor[i][3]
         ) {
           for(var j = 0; j < 16; j += 4) {
             QCCube.colors[i*16+j  ] = c[0];
@@ -64,14 +79,17 @@ function QCCube(params) {
           break; // Hack while all cubes are similarly colored.
       }
 
+      gl.bindBuffer(gl.ARRAY_BUFFER, QCCube.colorBuffer);
       if(updated) {
         gl.bufferData(gl.ARRAY_BUFFER, QCCube.colors, gl.DYNAMIC_DRAW);
-        gl.vertexAttribPointer(gl.program.aVertexColor, QCCube.colorBuffer.itemSize, gl.FLOAT, false, 0, 0);
       }
+      gl.vertexAttribPointer(gl.program.aVertexColor, QCCube.colorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
       gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, QCCube.indexBuffer);
 
       gl.push();
+      if(params.ImageFront != null)
+        gl.useTexture(ImageFront);
 
       if(X != 0 || Y != 0 || Z != 0)
         mat4.translate(gl.mvMatrix, [X, Y, Z]);
@@ -89,6 +107,8 @@ function QCCube(params) {
       gl.matUpdate();
       gl.drawElements(gl.TRIANGLES, QCCube.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
+      if(params.ImageFront != null)
+        gl.popTexture();
       gl.pop();
     }
   }
@@ -174,4 +194,36 @@ QCCube.normals = [
   -1.0,  0.0,  0.0,
   -1.0,  0.0,  0.0,
   -1.0,  0.0,  0.0
+];
+QCCube.texcoords = [
+  // Front
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0,
+  // Back
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0,
+  // Top
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0,
+  // Bottom
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0,
+  // Right
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0,
+  // Left
+  0.0,  0.0,
+  1.0,  0.0,
+  1.0,  1.0,
+  0.0,  1.0
 ];
